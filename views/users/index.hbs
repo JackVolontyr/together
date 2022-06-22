@@ -1,0 +1,28 @@
+{{!-- USERS --}}
+<h1 class="h4">{{ title }}</h1>
+
+<div class="row">
+	{{#if allUsers.length}}
+		{{#each allUsers}}
+			<div class="col s12 m6 l4">
+				<div class="card">
+					<div class="card-image avatar-title-box">
+						{{#if avatarUrl}}
+							<img class="avatar-title" src="/{{avatarUrl}}" alt="avatar">
+						{{else}}
+							<img class="avatar-title" src="/sample-1.jpg" alt="avatar">
+						{{/if}}
+						<span class="card-title">{{firstName}} {{lastName}}</span>
+					</div>
+					<div class="card-content">
+						{{#if bio}}<p class="flow-text">{{bio}}</p>{{/if}}
+					</div>
+					<div class="card-action">
+						<a href="/users/{{_id}}">Show</a>
+						{{#if isAuthor}}<a href="/users/{{_id}}/edit?allow=true">Edit</a>{{/if}}
+					</div>
+				</div>
+			</div>
+		{{/each}}
+	{{/if}}
+</div>

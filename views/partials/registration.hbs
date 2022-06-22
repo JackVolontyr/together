@@ -1,0 +1,45 @@
+<h2 class="h5 m-t-2 m-b-3">Registration:</h2>
+
+<div class="row">
+	<form action="{{ action }}" method="POST" class="col s12">
+		<input type="hidden" name="_csrf" value="{{csrf}}">
+
+		{{#if registrationAlerts.length }}
+			{{#each registrationAlerts}}
+				<p class="info info--error m-b-1">{{this}}</p>
+			{{/each}}
+		{{/if}}
+
+		{{> email_password prefix='registration_' }}
+
+		<div class="row">
+			<div class="input-field col s12">
+				<input placeholder="" id="confirm" name="confirm" type="password" class="validate" required>
+				<label for="confirm">Password configm</label>
+				<span class="helper-text" data-error="Can`t be empty!" data-success="Well!"></span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s6">
+				<input placeholder="" id="firstName" name="firstName" type="text" class="validate" 
+					value="{{data.firstName}}"
+					required>
+				<label for="firstName">First Name</label>
+				<span class="helper-text" data-error="Can`t be empty!" data-success="Well!"></span>
+			</div>
+
+			<div class="input-field col s6">
+				<input placeholder="" id="lastName" name="lastName" type="text" class="validate"
+					value="{{data.lastName}}"
+					required>
+				<label for="lastName">Last Name</label>
+				<span class="helper-text" data-error="Can`t be empty!" data-success="Well!"></span>
+			</div>
+		</div>
+
+		<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+			<i class="material-icons right">send</i>
+		</button>
+	</form>
+</div>

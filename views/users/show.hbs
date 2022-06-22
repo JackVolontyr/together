@@ -1,0 +1,21 @@
+<h1 class="h4">{{ user.firstName }} {{ user.lastName }}</h1>
+{{#if user.avatarUrl}}
+	<img class="avatar" src="/{{user.avatarUrl}}" alt="avatar">
+{{else}}
+	<img class="avatar" src="/sample-1.jpg" alt="avatar">
+{{/if}}
+<p class="flow-text">{{ user.bio }}</p>
+<p class="flow-text">{{ user.email }}</p>
+
+{{#if user.isAuthor}}
+	<div class="users__tools flex">
+		<a class="waves-effect waves-light btn-large" href="/users/{{user._id}}/edit?allow=true">Edit</a>
+		<form action="/users/{{user._id}}/delete" method="post">
+			<input type="hidden" name="_csrf" value="{{@root.csrf}}">
+		
+			<button class="btn waves-effect waves-light btn-large red" type="submit" name="action">
+				<i class="material-icons delete">delete</i>
+			</button>
+		</form>
+	</div>
+{{/if}}

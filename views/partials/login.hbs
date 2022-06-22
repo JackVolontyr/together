@@ -1,0 +1,25 @@
+<h2 class="h5 m-t-2 m-b-3">Log in:</h2>
+
+<div class="row">
+	<form action="{{ action }}" method="POST" class="col s12">
+		<input type="hidden" name="_csrf" value="{{csrf}}">
+
+		{{#if loginAlerts.length }}
+			{{#each loginAlerts}}
+				<p class="info info--error m-b-1">{{this}}</p>
+			{{/each}}
+		{{/if}}
+
+		{{#if successLoginAlerts.length }}
+			{{#each successLoginAlerts}}
+				<p class="info info--success m-b-1">{{this}}</p>
+			{{/each}}
+		{{/if}}
+
+		{{> email_password prefix='login_' }}
+
+		<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+			<i class="material-icons right">send</i>
+		</button>
+	</form>
+</div>

@@ -1,0 +1,44 @@
+<h1 class="h4">Edit {{ proposal.title }}</h1>
+
+<div class="row">
+	<form action="/proposals/{{ proposal._id }}/update" method="POST" class="col s12">
+		<input type="hidden" name="_csrf" value="{{csrf}}">
+
+		{{#if proposalAlerts.length }}
+			{{#each proposalAlerts}}
+				<p class="info info--error m-b-1">{{this}}</p>
+			{{/each}}
+		{{/if}}
+
+		<div class="row">
+			<div class="input-field col s12">
+				<input 
+					placeholder="Title" 
+					id="title" 
+					name="title" 
+					type="text" 
+					class="validate"
+					value="{{proposal.title}}"
+					required>
+				<label for="title">{{proposal.title}}</label>
+				<span class="helper-text" data-error="Can`t be empty!" data-success="Well!"></span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<textarea 
+					id="comment" 
+					name="comment" 
+					class="materialize-textarea" 
+					required>{{proposal.comment}}</textarea>
+				<label for="comment">Proposal text:</label>
+				<span class="helper-text" data-error="Can`t be empty!" data-success="Well!"></span>
+			</div>
+		</div>
+
+		<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+			<i class="material-icons right">send</i>
+		</button>
+	</form>
+</div>

@@ -1,0 +1,13 @@
+{{!-- LOGIN --}}
+<h1 class="h4">{{title}}</h1>
+
+<div class="row m-t-2">
+	<div class="col s12">
+		<ul class="tabs" data-auth-tabs="">
+			<li class="tab col s6"><a class="active" href="#login">Log in</a></li>
+			<li class="tab col s6"><a href="#registration">Registration</a></li>
+		</ul>
+	</div>
+	<div id="login" class="col s12">{{> login action="/login" }}</div>
+	<div id="registration" class="col s12">{{> registration action="/login/registration" }}</div>
+</div>
