@@ -1,0 +1,60 @@
+.h4 {
+	font-size: 2.28rem;
+	line-height: 110%;
+	margin: 1.52rem 0 0.912rem 0;
+}
+
+.h5 {
+	font-size: 1.64rem;
+	line-height: 110%;
+	margin: 1.0933333333rem 0 0.656rem 0;
+}
+
+.flex {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.info {
+	color: white;
+	padding: 1rem;
+	margin-bottom: 2rem;
+}
+
+.info--success { background-color: #24af3b; }
+.info--error { background-color: #f44336; }
+
+.m-b-1 { margin-bottom: 1rem; }
+.m-b-2 { margin-bottom: 2rem; }
+.m-b-3 { margin-bottom: 3rem; }
+
+.m-t-1 { margin-top: 1rem; }
+.m-t-2 { margin-top: 2rem; }
+
+.card-action { min-height: 70px; }
+
+.users__tools {
+	width: 200px;
+}
+
+.avatar {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.avatar-title-box {
+	padding-top: 75%;
+	overflow: hidden;
+}
+
+.avatar-title {
+	position: absolute !important;
+}
+
+.card .card-content {
+	height: 126px;
+	overflow: hidden;
+}
