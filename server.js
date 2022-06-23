@@ -8,15 +8,17 @@ const flash = require("connect-flash");
 const MongoDBStore = require('connect-mongodb-session')(session);
 const helmet = require("helmet");
 const compression = require("compression");
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { setAuth, passUser, errorPage } = require("./middleware");
 const fileMiddleware = require("./middleware/fileMiddleware");
 
-const keys = require("./keys");
+// const keys = require("./keys");
 
 const app = express();
 
-const store = new MongoDBStore({ uri: keys.MONGO_DB_URI, collection: 'sessions' });
+const store = new MongoDBStore({ uri: process.env.MONGO_DB_URI, collection: 'sessions' });
 
 // HBs
 const hbs = expressHbs.create({
@@ -37,7 +39,7 @@ app.use('/imgs', express.static(path.join(__dirname, 'imgs')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
 	store,
-	secret: keys.SESSION_SECRET,
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false,
 	//cookie: { secure: true }
@@ -64,10 +66,10 @@ async function start(uri) {
 		// MongoDB
 		await mongoose.connect(uri, { useNewUrlParser: true });
 
-		const PORT = process.env.PORT || 8000;
+		const PORT = process.env.PORT || 8080;
 		app.listen(PORT, _ => { console.log(`Server starts on port: ${PORT}.`); });
 
 	} catch (error) { console.log(error);	}
 }
 
-start(keys.MONGO_DB_URI);
+start(process.env.MONGO_DB_URI);
