@@ -6,6 +6,7 @@ const { goToHome, toLoginPath, goToLogin, getMessages, toRegistrationPath, setUs
 const { loginValidators, registrationValidators } = require("../utils/validators");
 
 const User = require("../models/User");
+const { sendMail } = require("../mailer");
 
 const router = Router();
 
@@ -70,6 +71,7 @@ router.post('/registration', registrationValidators, async (request, response) =
 		await user.save();
 		request.flash('successLoginAlerts', 'User successfully created!');
 		goToLogin(response);
+		await sendMail('registration', { email, firstName, lastName });
 
 	} catch (error) { console.log(error); }
 });
