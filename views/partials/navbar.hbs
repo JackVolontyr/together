@@ -1,36 +1,9 @@
 <nav>
 	<div class="nav-wrapper container">
 		<a href="/" class="brand-logo">Together</a>
-
-		<ul id="nav-mobile" class="right hide-on-med-and-down">
-			{{#if isContacts }}
-				<li class="active"><a href="/contacts">Contacts</a></li>
-			{{else }}
-				<li><a href="/contacts">Contacts</a></li>
-			{{/if }}
-
-			{{#if isUsers }}
-				<li class="active"><a href="/users">Users</a></li>
-			{{else }}
-				<li><a href="/users">Users</a></li>
-			{{/if }}
-			
-			{{#if isAuthWithUserId }}
-				{{#if isProposals }}
-					<li class="active"><a href="/proposals">Add Proposal</a></li>
-				{{else }}
-					<li><a href="/proposals">Add Proposal</a></li>
-				{{/if }}
-				
-				<li><a href="/login/logout">Log out</a></li>
-
-			{{else }}
-				{{#if isLogin }}
-					<li class="active"><a href="/login">Log in</a></li>
-				{{else }}
-					<li><a href="/login">Log in</a></li>
-				{{/if }}
-			{{/if }}
-		</ul>
+		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">{{> navbar_links }}</ul>
 	</div>
 </nav>
+
+<ul class="sidenav" id="mobile-demo">{{> navbar_links }}</ul>

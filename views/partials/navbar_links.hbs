@@ -1,0 +1,28 @@
+{{#if isContacts }}
+	<li class="active"><a href="/contacts">Contacts</a></li>
+{{else }}
+	<li><a href="/contacts">Contacts</a></li>
+{{/if }}
+
+{{#if isUsers }}
+	<li class="active"><a href="/users">Users</a></li>
+{{else }}
+	<li><a href="/users">Users</a></li>
+{{/if }}
+
+{{#if isAuthWithUserId }}
+	{{#if isProposals }}
+		<li class="active"><a href="/proposals">Add Proposal</a></li>
+	{{else }}
+		<li><a href="/proposals">Add Proposal</a></li>
+	{{/if }}
+	
+	<li><a href="/login/logout">Log out</a></li>
+
+{{else }}
+	{{#if isLogin }}
+		<li class="active"><a href="/login">Log in</a></li>
+	{{else }}
+		<li><a href="/login">Log in</a></li>
+	{{/if }}
+{{/if }}
