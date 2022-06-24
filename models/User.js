@@ -8,6 +8,8 @@ const userSchema = new Schema({
 	proposals: [{ type: Schema.Types.ObjectId, ref: 'Proposal' }],
 	bio: { type: String },
 	avatarUrl: { type: String },
+	resetPasswordToken: String,
+	resetPasswordTokenExpiration: Date,
 });
 
 userSchema.methods.addProposal = function (proposal) {
