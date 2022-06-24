@@ -14,7 +14,7 @@ const router = Router();
  * GET /proposals
  */
 router.get('/', (request, response) => response.render('proposals', {
-	title: 'Add proposal page', 
+	title: 'Add proposal', 
 	isProposals: true, 
 }));
 
