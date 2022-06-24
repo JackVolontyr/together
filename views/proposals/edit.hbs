@@ -4,11 +4,7 @@
 	<form action="/proposals/{{ proposal._id }}/update" method="POST" class="col s12">
 		<input type="hidden" name="_csrf" value="{{csrf}}">
 
-		{{#if proposalAlerts.length }}
-			{{#each proposalAlerts}}
-				<p class="info info--error m-b-1">{{this}}</p>
-			{{/each}}
-		{{/if}}
+		{{> alerts alerts=proposalAlerts }}
 
 		<div class="row">
 			<div class="input-field col s12">

@@ -4,11 +4,7 @@
 	<form enctype="multipart/form-data" action="/users/{{ user._id }}/update" method="POST" class="col s12">
 		<input type="hidden" name="_csrf" value="{{csrf}}">
 
-		{{#if userAlerts.length }}
-			{{#each userAlerts}}
-				<p class="info info--error m-b-1">{{this}}</p>
-			{{/each}}
-		{{/if}}
+		{{> alerts alerts=userAlerts }}
 
 		<div class="file-field input-field">
 			<div class="btn">
