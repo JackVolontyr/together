@@ -1,7 +1,7 @@
 {
 	"name": "expressjs",
 	"version": "1.0.0",
-  "homepage" : "https://jackvolontyr.github.io/together/",
+  "homepage" : "https://quiet-falls-87524.herokuapp.com/",
 	"description": "",
 	"main": "server.js",
 	"scripts": {
