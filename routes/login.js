@@ -16,10 +16,8 @@ const router = Router();
 
 const BCRYPT_NUMBER = 10;
 
-const toResetPasswordWithError = (req, res, isSpecialError = false, errorInfo = false) => {
-	req.flash('resetPasswordAlerts', 
-		isSpecialError ? getMessages(isSpecialError) : errorInfo ? errorInfo : 'Something went wrong.'
-	);
+const toResetPasswordWithError = (req, res, errorInfo = false) => {
+	req.flash('resetPasswordAlerts', errorInfo ? errorInfo : 'Something went wrong.');
 	return res.status(422).redirect(toResetPasswordPath);
 }
 
@@ -107,10 +105,10 @@ router.get('/reset-password', (request, response) => {
 router.post('/reset-password', emailNotExistValidators, (request, response) => {
 	try {
 		const errors = validationResult(request);
-		if (!errors.isEmpty()) toResetPasswordWithError(request, response, errors);
+		if (!errors.isEmpty()) toResetPasswordWithError(request, response, getMessages(errors));
 
 		crypto.randomBytes(32, async (error, buffer) => {
-			if (error) toResetPasswordWithError(request, response, false, 'Crypto error. Write to Moderator.');
+			if (error) toResetPasswordWithError(request, response, 'Crypto error. Write to Moderator.');
 
 			const resetPasswordToken = buffer.toString('hex');
 			const oneHour = 60 * 60 * 1000;
@@ -143,7 +141,7 @@ router.post('/reset-password', emailNotExistValidators, (request, response) => {
 router.get('/set-new-password/:token', async (request, response) => {
 	try {
 		const { token } = request.params;
-		if (!token) toResetPasswordWithError(request, response, false, "Token not exists. Write to Moderator.");
+		if (!token) toResetPasswordWithError(request, response, "Token not exists. Write to Moderator.");
 
 		const candidate = await User.findOne({
 			resetPasswordToken: token,
@@ -151,7 +149,7 @@ router.get('/set-new-password/:token', async (request, response) => {
 		});
 
 		if (!candidate) {
-			toResetPasswordWithError(request, response, false, "User with this token not exists. Write to Moderator.");
+			toResetPasswordWithError(request, response, "User with this token not exists. Write to Moderator.");
 
 		} else {
 			response.render('login/set_new_password', {
@@ -172,13 +170,13 @@ router.get('/set-new-password/:token', async (request, response) => {
  */
 router.post('/set-new-password/', confirmPasswordValidators, async (request, response) => {
 	try {
+		const { usedId, token, password } = request.body;
+
 		const errors = validationResult(request);
 		if (!errors.isEmpty()) {
 			request.flash('setNewPasswordAlerts', getMessages(errors));
-			return response.status(422).redirect(`${toSetNewPasswordPath}/${request.body.token}`);
+			return response.status(422).redirect(`${toSetNewPasswordPath}/${token}`);
 		}
-
-		const { usedId, token, password } = request.body;
 
 		const candidate = await User.findOne({
 			_id: usedId,
@@ -195,7 +193,7 @@ router.post('/set-new-password/', confirmPasswordValidators, async (request, res
 			goToLogin(response);
 
 		} else {
-			toResetPasswordWithError(request, response, false, 'User with this token not exists (2). Write to Moderator.');
+			toResetPasswordWithError(request, response, 'User with this token not exists (2). Write to Moderator.');
 		}
 
 	} catch (error) { console.log(error); }
