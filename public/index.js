@@ -5,4 +5,5 @@ const utils = {
 
 window.onload = function (event) {
 	M.Tabs.init(utils.qs('[data-auth-tabs]'));
+	M.Sidenav.init(utils.qsAll('.sidenav'));
 }
