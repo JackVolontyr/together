@@ -4,21 +4,11 @@
 	<form action="{{ action }}" method="POST" class="col s12">
 		<input type="hidden" name="_csrf" value="{{csrf}}">
 
-		{{#if registrationAlerts.length }}
-			{{#each registrationAlerts}}
-				<p class="info info--error m-b-1">{{this}}</p>
-			{{/each}}
-		{{/if}}
+		{{> alerts alerts=registrationAlerts }}
 
-		{{> email_password prefix='registration_' }}
-
-		<div class="row">
-			<div class="input-field col s12">
-				<input placeholder="" id="confirm" name="confirm" type="password" class="validate" required>
-				<label for="confirm">Password configm</label>
-				<span class="helper-text" data-error="Can`t be empty!" data-success="Well!"></span>
-			</div>
-		</div>
+		{{> email prefix='registration_' }}
+		{{> password prefix='registration_' }}
+		{{> password prefix='confirm_' name="confirm" label="Password configm" }}
 
 		<div class="row">
 			<div class="input-field col s6">
