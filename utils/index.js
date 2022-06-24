@@ -16,9 +16,12 @@ module.exports = {
 	toProposalsPath: '/proposals',
 	toLoginPath: '/login',
 	toRegistrationPath: '/login#registration',
+	toResetPasswordPath: '/login/reset-password',
+	toSetNewPasswordPath: '/login/set-new-password',
 
 	goToProposals: response => response.redirect('/proposals'),
 	goToLogin: response => response.redirect('/login'),
 	goToRegistration: response => response.redirect('/login#registration'),
+	goToResetPassword: response => response.redirect('/login/reset-password'),
 	goToHome: response => response.redirect('/'),
 };

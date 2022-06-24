@@ -7,14 +7,7 @@ const userValidators = [
 	body('lastName', 'Last name must be at least 1 character long.').isLength({ min: 1, max: 36 }).trim(),
 ];
 
-exports.userValidators = [ ...userValidators ];
-
-exports.proposalValidators = [
-	body('title', 'Title must be at least 2 character long.').isLength({ min: 2, max: 150 }).trim(),
-	body('comment', 'Comment must be at least 2 character long.').isLength({ min: 2, max: 1500 }).trim(),
-];
-
-exports.loginValidators = [
+const emailNotExistValidators = [
 	body('email', 'Invalid value of param: email.').isEmail().custom(async (value) => {
 		try {
 			const candidate = await User.findOne({ email: value });
@@ -22,6 +15,27 @@ exports.loginValidators = [
 			
 		} catch (error) { console.log(error); }
 	}).normalizeEmail(),
+];
+
+const confirmPasswordValidators = [
+	body('confirm').custom((value, { req }) => {
+		if (value !== req.body.password) throw new Error('Passwords do not match.');
+		return true;
+	}).trim(),
+];
+
+exports.userValidators = [ ...userValidators ];
+
+exports.proposalValidators = [
+	body('title', 'Title must be at least 2 character long.').isLength({ min: 2, max: 150 }).trim(),
+	body('comment', 'Comment must be at least 2 character long.').isLength({ min: 2, max: 1500 }).trim(),
+];
+
+exports.emailNotExistValidators = [ ...emailNotExistValidators ];
+exports.confirmPasswordValidators = [ ...confirmPasswordValidators ];
+
+exports.loginValidators = [
+	...emailNotExistValidators,
 	
 	body('password', 'Password must be at least 1 character long.').isLength({ min: 1, max: 36 }).custom(async (value, {req}) => {
 		try {
@@ -43,11 +57,7 @@ exports.registrationValidators = [
 		} catch (error) { console.log(error); }
 	}).normalizeEmail(),
 	
-	body('confirm').custom((value, { req }) => {
-		if (value !== req.body.password) throw new Error('Passwords do not match.');
-		return true;
-	}).trim(),
-	
+	...confirmPasswordValidators,
 	body('password', 'Password must be at least 1 character long.').isLength({min: 1, max: 36}).trim(),
 	...userValidators
 ];
