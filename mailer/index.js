@@ -1,13 +1,20 @@
 const nodemailer = require('nodemailer');
-const { registrationOption } = require('./views');
+const { 
+	registrationOption, registrationOptionToModerator, resetPasswordOption
+} = require('./views');
 
 const sendMail = (action, options) => {
-	const { email, firstName, lastName } = options;
+	const { email, firstName, lastName, route, resetPasswordToken } = options;
+	const { MODERATOR_EMAIL, BASE_URL: baseUrl } = process.env;
+	let standartOptions = { email, firstName, lastName, baseUrl };
+	let callback = () => {};
 
-	let mailOptions = { from: process.env.MODERATOR_EMAIL, to: email };
+	let mailOptions = { from: MODERATOR_EMAIL, to: email };
+	let mailOptionsToModerator = { from: MODERATOR_EMAIL, to: MODERATOR_EMAIL };
 
 	const transporter = nodemailer.createTransport({
 		service: process.env.MAIL_SERVICE,
+		secure: true,
 		auth: {
 			type: process.env.CLIENT_TYPE,
 			user: process.env.MAIL_USERNAME,
@@ -18,26 +25,35 @@ const sendMail = (action, options) => {
 		}
 	});
 
-	const mailerCallback = (error, data) => {
-		if (error) { console.log("Error " + error); } else { console.log("Email sent successfully"); }
-	}
-
 	switch (action) {
 		case 'registration':
 			mailOptions = { 
 				...mailOptions, 
-				...registrationOption({ email, firstName, lastName, baseUrl: process.env.BASE_URL })
+				...registrationOption(standartOptions)
+			};
+
+			callback = data => transporter.sendMail({ 
+				...mailOptionsToModerator, 
+				...registrationOptionToModerator(standartOptions)
+			});
+			
+			break;
+
+		case 'reset-password':
+			mailOptions = { 
+				...mailOptions, 
+				...resetPasswordOption({ ...standartOptions, route, resetPasswordToken })
 			}
 			break;
-	
+
 		default:
 			console.log('Error: incorrect mailer action.'); 
 			return;
 	}
 
-	transporter.sendMail(mailOptions, mailerCallback);
+	transporter.sendMail(mailOptions)
+		.then(callback)
+		.catch(error => console.log(error));
 }
 
-module.exports = {
-	sendMail
-}
+module.exports = { sendMail }
