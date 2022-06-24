@@ -8,6 +8,7 @@ const router = Router();
 router.get('/', (_, response) => {
 	response.render('contacts', {
 		title: 'Contacts page',
+		moderatorEmail: process.env.MODERATOR_EMAIL,
 		isContacts: true
 	});
 });
