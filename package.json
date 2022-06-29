@@ -1,7 +1,7 @@
 {
 	"name": "expressjs",
 	"version": "1.0.0",
-  "homepage" : "https://quiet-falls-87524.herokuapp.com/",
+  "homepage" : "https://together-social-network.herokuapp.com/",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
